@@ -3,6 +3,7 @@
   MIDI_IN_CCs,
   MIDI_OUT_CH,
   MIDI_OUT_CCs,
+  SYSEX_DEVICE_ID,
   SYSEX_HEADER,
   SYSEX_MESSAGEs
 } = require './midi-implementation'
@@ -28,7 +29,7 @@ reverseMidiImplementation = (ccMessages, sysExMessages) ->
     else
       swapKeyValue def.encoding
     ret[def.id + (if 'index' of def then def.index else '')] =
-      cc: cc
+      cc: parseInt cc
       encoding: encoding
       desc: def.desc
       
@@ -38,7 +39,7 @@ reverseMidiImplementation = (ccMessages, sysExMessages) ->
     else
       swapKeyValue def.encoding
     ret[def.id] =
-      sysex: sysex
+      sysex: parseInt sysex
       encoding: encoding
       hasIndex: def.hasIndex
       hasString: def.hasString
@@ -77,10 +78,11 @@ encodeMessage = (kkMessage, messages, ch) ->
   if 'cc' of def
     type: 'ControlChange'
     channel: ch
-    control: parseInt def.cc
+    control: def.cc
     value: encodeValue kkMessage.value, def.encoding
   else if 'sysex' of def
     data = [SYSEX_HEADER...]
+    data.push def.sysex
     # value
     data.push if def.encoding
       encodeValue kkMessage.value, def.encoding
@@ -96,11 +98,11 @@ encodeMessage = (kkMessage, messages, ch) ->
     # String
     if def.hasString
       data = if typeof kkMessage.value is 'string'
-        [data..., (Array::slice (Buffer.from kkMessage.value), 0)...]
+        [data..., (Array::slice.call (Buffer.from kkMessage.value), 0)...]
       else if typeof kkMessage.string is 'string'
-        [data..., (Array::slice (Buffer.from kkMessage.string), 0)...]
+        [data..., (Array::slice.call (Buffer.from kkMessage.string), 0)...]
     type: 'SysEx'
-    deviceId: 0     # midi-messages doesn't support 2byte id.
+    deviceId: SYSEX_DEVICE_ID
     data: data
   else
     throw new Error "Wrong definition. def:#{def}"

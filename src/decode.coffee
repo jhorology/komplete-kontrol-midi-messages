@@ -53,7 +53,7 @@ parseSysEx = (midiMessage) ->
     unless index is 0
       throw new Error "Maybe wrong definition. index isn't 0. id:#{def.id} index:#{index}"
   # has value?
-  if def.encoding
+  unless typeof def.encoding is 'string' and def.encoding.startsWith 'Fixed'
     result.value = decodeValue value, def.encoding
   else
     unless value is 0

@@ -19,8 +19,9 @@ daw = midiUtils.openVirtualMidi DAW_BRIDGE_PORT
 
 # MIDI message stream
 downStreamMidiDecoder = new midiMessage.DecodeStream()
-downStreamMidiEncoder = new midiMessage.EncodeStream useRunningStatus: off
+downStreamMidiEncoder = new midiMessage.EncodeStream useRunningStatus: on
 upStreamMidiDecoder = new midiMessage.DecodeStream()
+# Live doesn't support running status?
 upStreamMidiEncoder = new midiMessage.EncodeStream  useRunningStatus: off
 
 # MIDI Komlete Kontrol message stream
@@ -29,28 +30,34 @@ downStreamKKEncoder = new kkMessage.DownStreamEncoder()
 upStreamKKDecoder = new kkMessage.UpStreamDecoder()
 upStreamKKEncoder = new kkMessage.UpStreamEncoder()
 
-daw.in.on 'data', (msg) ->
-  console.info 'DAW -> KK  RAW'.downFirst, msg
-downStreamMidiDecoder.on 'data', (msg) ->
-  console.info 'DAW -> KK MIDI'.downFollow, msg
+# daw.in.on 'data', (msg) ->
+#   console.info 'DAW -> KK  RAW'.downFirst, msg
+# downStreamMidiDecoder.on 'data', (msg) ->
+#   console.info 'DAW -> KK MIDI'.downFollow, msg
+# downStreamKKDecoder.on 'data', (msg) ->
+#   console.info 'DAW -> KK   KK'.downFollow, msg
+# downStreamKKEncoder.on 'data', (msg) ->
+#   console.info 'DAW -> KK MIDI'.downFollow, msg
+# downStreamMidiEncoder.on 'data', (msg) ->
+#   console.info 'DAW -> KK  RAW'.downFollow, msg
+
+# kk.in.on 'data', (msg) ->
+#   console.info 'KK -> DAW  RAW'.upFirst, msg
+# upStreamMidiDecoder.on 'data', (msg) ->
+#   console.info 'KK -> DAW MIDI'.upFollow, msg
+# upStreamKKDecoder.on 'data', (msg) ->
+#   console.info 'KK -> DAW   KK'.upFollow, msg
+# upStreamKKEncoder.on 'data', (msg) ->
+#   console.info 'KK -> DAW MIDI'.upFollow, msg
+# upStreamMidiEncoder.on 'data', (msg) ->
+#   console.info 'KK -> DAW  RAW'.upFollow, msg
+
+
 downStreamKKDecoder.on 'data', (msg) ->
-  console.info 'DAW -> KK   KK'.downFollow, msg
-downStreamKKEncoder.on 'data', (msg) ->
-  console.info 'DAW -> KK MIDI'.downFollow, msg
-downStreamMidiEncoder.on 'data', (msg) ->
-  console.info 'DAW -> KK  RAW'.downFollow, msg
+  console.info 'DAW -> KK   KK'.downFirst, msg
 
-kk.in.on 'data', (msg) ->
-  console.info 'KK -> DAW  RAW'.upFirst, msg
-upStreamMidiDecoder.on 'data', (msg) ->
-  console.info 'KK -> DAW MIDI'.upFollow, msg
 upStreamKKDecoder.on 'data', (msg) ->
-  console.info 'KK -> DAW   KK'.upFollow, msg
-upStreamKKEncoder.on 'data', (msg) ->
-  console.info 'KK -> DAW MIDI'.upFollow, msg
-upStreamMidiEncoder.on 'data', (msg) ->
-  console.info 'KK -> DAW  RAW'.upFollow, msg
-
+  console.info 'KK -> DAW   KK'.upFirst, msg
 
 # down stream Komplete Kontrol <- DAW
 daw.in

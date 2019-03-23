@@ -1,5 +1,9 @@
 ###
-  MIDI implementation fo DAW MIDI-IN
+  Komplete Kontrol DAW port - MIDI Implementation
+###
+
+###
+  Receive data (DAW transmit data)
 ###
 MIDI_IN_CH = 16
 MIDI_IN_CCs =
@@ -58,71 +62,91 @@ MIDI_IN_CCs =
   34:
     id: 'Quantize'
     encoding: 'Bool7'  # 0=off, 127=on
-    desc: 'LED state of Quantize button. maybe unused.'
+    desc: 'Set LED state of Quantize button. maybe unused.'
   35:
     id: 'Auto'
     encoding: 'Bool7'  # 0=off, 127=on
-    desc: 'LED state of Auto button (Shift + Quantize).'
+    desc: 'Set LED state of Auto button (Shift + Quantize).'
+  48:
+    id: 'DialVerticalClick'
+    encoding: 'Bool7'  # 0=off, 127=on
+    desc: 'Maybe unused, Ableton Live send this message when shutdown.'
+  50:
+    id: 'DialHorizontalClick'
+    encoding: 'Bool7'  # 0=off, 127=on
+    desc: 'Maybe unused, Ableton Live send this message when shutdown.'
+  52:
+    id: 'DialRotate'
+    encoding: 'Bool7'  # 0=off, 127=on
+    desc: 'Maybe unused, Ableton Live send this message when shutdown.'
+  67:
+    id: 'Mute'
+    encoding: 'Bool7'  # 0=off, 127=on
+    desc: 'Maybe unused, Ableton Live send this message when shutdown.'
+  68:
+    id: 'Solo'
+    encoding: 'Bool7'  # 0=off, 127=on
+    desc: 'Maybe unused, Ableton Live send this message when shutdown.'
   80:
     id: 'Knob'
     index: 0
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 1 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 1 absolute value, usually uesd as absolute position of fader of Mixer.'
   81:
     id: 'Knob'
     index: 1
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 2 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 2 absolute value, usually uesd as absolute position of fader of Mixer.'
   82:
     id: 'Knob'
     index: 2
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 3 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 3 absolute value, usually uesd as absolute position of fader of Mixer.'
   83:
     id: 'Knob'
     index: 3
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 4 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 4 absolute value, usually uesd as absolute position of fader of Mixer.'
   84:
     id: 'Knob'
     index: 4
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 5 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 5 absolute value, usually uesd as absolute position of fader of Mixer.'
   85:
     id: 'Knob'
     index: 5
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 6 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 6 absolute value, usually uesd as absolute position of fader of Mixer.'
   86:
     id: 'Knob'
     index: 6
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 7 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 7 absolute value, usually uesd as absolute position of fader of Mixer.'
   87:
     id: 'Knob'
     index: 7
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Knob 8 absolute value, usually uesd as absolute position of fader of Mixer.'
+    desc: 'Set Knob 8 absolute value, usually uesd as absolute position of fader of Mixer.'
   88:
     id: 'ShiftKnob'
     index: 0
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Shift + Knob 1 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
+    desc: 'Set Shift + Knob 1 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
   89:
     id: 'ShiftKnob'
     index: 1
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Shift + Knob 2 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
+    desc: 'Set Shift + Knob 2 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
   90:
     id: 'ShiftKnob'
     index: 2
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Shift + Knob 3 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
+    desc: 'Set Shift + Knob 3 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
   91:
     id: 'ShiftKnob'
     index: 3
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Shift + Knob 4 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
+    desc: 'Set Shift + Knob 4 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
   92:
     id: 'ShiftKnob'
     index: 4
@@ -132,24 +156,24 @@ MIDI_IN_CCs =
     id: 'ShiftKnob'
     index: 5
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Shift + Knob 6 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
+    desc: 'Set Shift + Knob 6 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
   94:
     id: 'ShiftKnob'
     index: 6
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Shift + Knob 7 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
+    desc: 'Set Shift + Knob 7 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
   95:
     id: 'ShiftKnob'
     index: 7
     encoding: 'UInt7'  # 0 - 127
-    desc: 'Shift + Knob 8 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
+    desc: 'Set Shift + Knob 8 absolute value, usually uesd as absolute position of pan of Mixer, center=64.'
   96:
     id: 'ClipLaunch'
-    encoding: 'Fixed1'  # always 1
+    encoding: 'Bool7'
     desc: 'Not sure, just a Feedback for DialPush?'
   97:
     id: 'ClipStop'
-    encoding: 'UInt7'  # 1, 127
+    encoding: 'Bool7'
     desc: 'Not sure, just a Feedback for ShiftDialPush?'
 
 SYSEX_DEVICE_ID = [0, 33, 9]
@@ -163,10 +187,10 @@ SYSEX_MESSAGEs =
     desc: 'Set type of indexed track.'
   65:
     id: 'TrackChanged'
-    encoding: 'UInt7'   # value encoding
+    encoding: 'Fixed0'   # value encoding
     hasIndex: off
     hasString: on
-    desc: 'Notify instance id of KK for last selected track. "NIKBxx" or ""'
+    desc: 'Notify instance id of KK for last selected track. "NIKBxx"=first parameter name of KK plugin  or ""=Track doesn\'t have KK plugin.'
   66:
     id: 'TrackSelection'
     encoding: 'Bool1'  # value encoding
@@ -185,7 +209,7 @@ SYSEX_MESSAGEs =
     hasIndex: on
     hasString: off
     desc: 'Set solo state of indexed track.'
-  68:
+  69:
     id: 'TrackArm'
     encoding: 'Bool1'  # value encoding
     hasIndex: on
@@ -211,7 +235,7 @@ SYSEX_MESSAGEs =
     desc: 'Set name of indexed track.'
   
 ###
-  MIDI implementation fo DAW MIDI-OUT
+  Transmit data (DAW receive data)
 ###
 MIDI_OUT_CH = 16
 MIDI_OUT_CCs =

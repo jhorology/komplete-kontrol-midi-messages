@@ -53,11 +53,9 @@ parseSysEx = (midiMessage) ->
     unless index is 0
       throw new Error "Maybe wrong definition. index isn't 0. id:#{def.id} index:#{index}"
   # has value?
+  v = decodeValue value, def.encoding
   unless typeof def.encoding is 'string' and def.encoding.startsWith 'Fixed'
-    result.value = decodeValue value, def.encoding
-  else
-    unless value is 0
-      throw new Error "Maybe wrong definition. value isn't 0. id:#{def.id} value:#{value}"
+    result.value = v
   # has String?
   if def.hasString
     str = (Buffer.from data.slice 3).toString()
@@ -101,8 +99,14 @@ decodeValue = (v, enc) ->
         throw new Error "Wrong definition of encoding [#{enc}]. value:#{v}"
       enc[v]
     when enc is 'UInt7' then v
-    when enc is 'Fixed0' then undefined
-    when enc is 'Fixed1' then undefined
+    when enc is 'Fixed0'
+      unless v is 0
+        throw new Error "Wrong definition of encoding [#{enc}]. value:#{v}"
+      undefined
+    when enc is 'Fixed1'
+      unless v is 1
+        throw new Error "Wrong definition of encoding [#{enc}]. value:#{v}"
+      undefined
     else
       throw new Error "Unknown definition of encoding [#{enc}]."
 

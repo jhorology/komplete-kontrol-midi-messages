@@ -7,7 +7,7 @@ module.exports =
     output = new midi.output()
     input.openVirtualPort inName
     # ignore sysex, timing, active sensing
-    input.ignoreTypes false, true, false
+    input.ignoreTypes off, on, off
     output.openVirtualPort outName
     in: midi.createReadStream input
     out: midi.createWriteStream output
@@ -26,7 +26,7 @@ module.exports =
       throw new Error "Unfound MIDI output port. name:#{inName}"
     input.openPort inputIndex
     # ignore sysex, timing, active sensing
-    input.ignoreTypes false, true, false
+    input.ignoreTypes off, on, off
     output.openPort outputIndex
     in: midi.createReadStream input
     out: midi.createWriteStream output
